@@ -1,7 +1,7 @@
 package client.thread;
 
 import model.Constant;
-import model.Message;
+import model.MessageOldEugen;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,11 +42,11 @@ public class SenderThread implements Runnable {
 
             while (true) {
                 String inputLine = input.readLine();
-                final long code = inputLine.toUpperCase().equals(Constant.IP_REQUEST_COMMAND) ? Message.REQUEST : Message.MESSAGE;
+                final long code = inputLine.toUpperCase().equals(Constant.IP_REQUEST_COMMAND) ? MessageOldEugen.REQUEST : MessageOldEugen.MESSAGE;
 
                 String message = name + ": " + inputLine;
                 socket.send(
-                        Message.getPacketForSend(
+                        MessageOldEugen.getPacketForSend(
                                 code,
                                 message,
                                 broadcastAddress,

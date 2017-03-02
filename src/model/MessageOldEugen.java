@@ -5,7 +5,7 @@ import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
-public class Message {
+public class MessageOldEugen {
 
     private static final int DEFAULT_PACKET_SIZE = 1024;
 
@@ -16,13 +16,13 @@ public class Message {
 
     private DatagramPacket packet;
 
-    private Message() {
+    private MessageOldEugen() {
         int size = CODE_SIZE + DEFAULT_PACKET_SIZE;
         byte[] buffer = new byte[size];
         packet = new DatagramPacket(buffer, buffer.length);
     }
 
-    private Message(long code, byte[] data, int dataLength, InetAddress address, int port) {
+    private MessageOldEugen(long code, byte[] data, int dataLength, InetAddress address, int port) {
         byte[] encapsulatedData = new byte[CODE_SIZE + dataLength];
 
         byte[] codeArray = ByteBuffer.allocate(CODE_SIZE).putLong(code).array();
@@ -39,11 +39,11 @@ public class Message {
     }
 
     public static DatagramPacket getPacketForSend(long code, String data, InetAddress address, int port) {
-        return (new Message(code, data.getBytes(), data.length(), address, port)).packet;
+        return (new MessageOldEugen(code, data.getBytes(), data.length(), address, port)).packet;
     }
 
-    public static Message getPacketForReceive() {
-        return new Message();
+    public static MessageOldEugen getPacketForReceive() {
+        return new MessageOldEugen();
     }
 
     public byte[] getData() {

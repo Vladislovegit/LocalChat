@@ -1,7 +1,7 @@
 package client.thread;
 
 import model.Constant;
-import model.Message;
+import model.MessageOldEugen;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -37,20 +37,20 @@ public class ReceiverThread implements Runnable {
     public void run() {
         try (DatagramSocket socket = new DatagramSocket(Constant.RECEIVER_PORT)) {
             socket.setBroadcast(true);
-            Message message = Message.getPacketForReceive();
+            MessageOldEugen message = MessageOldEugen.getPacketForReceive();
 
             while (true) {
                 socket.receive(message.getPacket());
 
-                if (message.getCode() == Message.MESSAGE) {
+                if (message.getCode() == MessageOldEugen.MESSAGE) {
                     System.out.println(message.toString());
-                } else if (message.getCode() == Message.REQUEST) {
+                } else if (message.getCode() == MessageOldEugen.REQUEST) {
 
                     String reply = name + " [" + address + "].";
 
                     socket.send(
-                            Message.getPacketForSend(
-                                    Message.MESSAGE,
+                            MessageOldEugen.getPacketForSend(
+                                    MessageOldEugen.MESSAGE,
                                     reply,
                                     message.getPacket().getAddress(),
                                     Constant.RECEIVER_PORT
