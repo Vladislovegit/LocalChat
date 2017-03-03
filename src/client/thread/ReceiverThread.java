@@ -1,5 +1,6 @@
 package client.thread;
 
+import client.Client;
 import model.Constant;
 import model.MessageOldEugen;
 
@@ -10,14 +11,14 @@ import java.net.SocketException;
 
 public class ReceiverThread implements Runnable {
     private final String name;
-    private final String interfaceName;
 
     private String address;
+    private Client client
 
-    public ReceiverThread(String name, String interfaceName) {
+    public ReceiverThread(String name, Client client) {
         this.name = name;
-        this.interfaceName = interfaceName;
         this.address = getAddress();
+        this.client = client;
     }
 
     private String getAddress() {
