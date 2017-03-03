@@ -2,6 +2,8 @@ package model;
 
 public class TextMessagePackage extends DataPackage<TextMessage> {
 
+    public TextMessagePackage() {}
+
     public TextMessagePackage(TextMessage textMessage) {
         super(textMessage);
     }

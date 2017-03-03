@@ -10,7 +10,7 @@ public class Client {
 
     public Client(String name, String interfaceName) {
         receiverThread = new ReceiverThread(name, interfaceName);
-        senderThread = new SenderThread(name, interfaceName);
+        senderThread = new SenderThread(name);
     }
 
     public void start() {
