@@ -1,6 +1,8 @@
 package model;
 
-public abstract class DataPackage<PackageData> extends EmptyPackage {
+import com.google.gson.Gson;
+
+public abstract class DataPackage<PackageData> extends BasePackage {
 
     private PackageData data;
 

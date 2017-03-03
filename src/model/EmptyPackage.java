@@ -1,22 +1,23 @@
 package model;
 
 
-import com.google.gson.Gson;
+public final class EmptyPackage extends BasePackage {
 
-public abstract class EmptyPackage {
-
-    private Long type = 0L;
-
-    public EmptyPackage() {}
-
-    public abstract Long getPackageType();
-
-    public static Long getPackageType(byte[] bytes) {
-        return new Gson().fromJson(new String(bytes), EmptyPackage.class).type;
+    EmptyPackage() {
+        super();
     }
 
-    public byte[] toBytes() {
-        type = getPackageType();
-        return new Gson().toJson(this).getBytes();
+    @Override
+    public Integer getPackageType() {
+        return type;
     }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
 }

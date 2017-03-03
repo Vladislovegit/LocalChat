@@ -1,13 +1,17 @@
 package model;
 
-public class IpResultPackage extends EmptyPackage {
+public class IpResultPackage extends DataPackage<IpResult> {
+
+    public IpResultPackage(IpResult ipResult) {
+        super(ipResult);
+    }
 
     public IpResultPackage() {
         super();
     }
 
     @Override
-    public Long getPackageType() {
+    public Integer getPackageType() {
         return Constant.IP_RESULT_PACKAGE;
     }
 }

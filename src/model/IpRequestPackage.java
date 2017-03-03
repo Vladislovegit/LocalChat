@@ -1,13 +1,13 @@
 package model;
 
-public class IpRequestPackage extends EmptyPackage{
+public class IpRequestPackage extends BasePackage {
 
     public IpRequestPackage() {
         super();
     }
 
     @Override
-    public Long getPackageType() {
+    public Integer getPackageType() {
         return Constant.IP_REQUEST_PACKAGE;
     }
 }

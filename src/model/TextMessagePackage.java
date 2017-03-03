@@ -9,7 +9,7 @@ public class TextMessagePackage extends DataPackage<TextMessage> {
     }
 
     @Override
-    public Long getPackageType() {
+    public Integer getPackageType() {
         return Constant.TEXT_MESSAGE;
     }
 

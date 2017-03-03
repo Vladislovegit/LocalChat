@@ -12,16 +12,41 @@ import java.util.Calendar;
 
 public class SenderThread implements Runnable {
 
-    private final String name;
     private InetAddress multicastAddress;
     private byte[] ipRequestData = new IpRequestPackage().toBytes();
     private TextMessagePackage textMessagePackage = new TextMessagePackage();
     private Client client;
 
-    public SenderThread(String name, Client client) {
-        this.name = name;
+    public SenderThread(Client client) {
         this.multicastAddress = getMulticastAddress();
         this.client = client;
+    }
+
+    @Override
+    public void run() {
+        try {
+            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+            MulticastSocket socket = new MulticastSocket();
+            socket.joinGroup(multicastAddress);
+            while (true) {
+                byte[] data;
+                String inputLine = input.readLine();
+                if(inputLine.toUpperCase().equals(Constant.IP_REQUEST_COMMAND)) {
+                    data = ipRequestData;
+                } else {
+                    TextMessage message = new TextMessage(inputLine,
+                            client.getLastReceivedMessageId() + 1,
+                            client.getName(),
+                            Calendar.getInstance().getTime());
+                    client.addSandedMessage(message);
+                    textMessagePackage.setData(message);
+                    data = textMessagePackage.toBytes();
+                }
+                socket.send(new DatagramPacket(data, data.length, multicastAddress, Constant.MULTICAST_PORT));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private InetAddress getMulticastAddress() {
@@ -32,28 +57,5 @@ public class SenderThread implements Runnable {
             e.printStackTrace();
         }
         return multicast;
-    }
-
-    @Override
-    public void run() {
-        try {
-            BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-            MulticastSocket socket = new MulticastSocket(Constant.MULTICAST_PORT);
-            socket.joinGroup(multicastAddress);
-            while (true) {
-                byte[] data;
-                String inputLine = input.readLine();
-                if(inputLine.toUpperCase().equals(Constant.IP_REQUEST_COMMAND)) {
-                    data = ipRequestData;
-                } else {
-                    TextMessage textMessage = new TextMessage(inputLine, 123L, name, Calendar.getInstance().getTime());
-                    textMessagePackage.setData(textMessage);
-                    data = textMessagePackage.toBytes();
-                }
-                socket.send(new DatagramPacket(data, data.length, multicastAddress, Constant.MULTICAST_PORT));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
